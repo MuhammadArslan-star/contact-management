@@ -1,0 +1,131 @@
+<section 
+  [class.flex]="!showMobileDetails"
+  [class.hidden]="showMobileDetails"
+  class="contact-listing"
+>
+  <!-- Header -->
+  <div class="listing-header">
+    <div class="listing-topbar">
+      <div class="flex items-center gap-3">
+        <button class="menu-button">
+          <img class="svg-icon" src="assets/svg/menu.svg" alt="Menu" />
+        </button>
+        <h1>Contacts</h1>
+      </div>
+      <div class="header-pagination">
+        <button>
+          <img class="svg-icon" src="assets/svg/arrow-left.svg" alt="Previous" />
+        </button>
+        <button>
+          <img class="svg-icon" src="assets/svg/arrow-right.svg" alt="Next" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-area">
+      <span>Search for a contact</span>
+      <div>
+        <input
+          type="text"
+          [ngModel]="searchQ"
+          (ngModelChange)="onSearchChange($event)"
+          placeholder="Name, email or phone number"
+          class="search-input"
+        />
+        <span class="search-icon">
+          <img class="svg-icon" src="assets/svg/search.svg" alt="Search" />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  @if (apiError) {
+    <div class="api-error" role="alert">{{ apiError }} Showing saved contacts instead.</div>
+  }
+
+  <!-- Contact List -->
+  <div class="contact-list">
+    @if (loading) {
+      <!-- Skeleton rows mirror the real .contact-row layout -->
+      @for (row of skeletonRows; track $index) {
+        <div class="contact-row is-skeleton" aria-hidden="true">
+          <div class="contact-summary">
+            <span class="skeleton skeleton-avatar"></span>
+            <div class="contact-copy">
+              <span class="skeleton skeleton-line skeleton-name"></span>
+              <span class="skeleton skeleton-line skeleton-role"></span>
+            </div>
+          </div>
+          <div class="row-actions">
+            <span class="skeleton skeleton-action"></span>
+            <span class="skeleton skeleton-action"></span>
+            <span class="skeleton skeleton-action"></span>
+          </div>
+        </div>
+      }
+    } @else {
+      @for (contact of contacts; track contact.id) {
+        <div
+          (click)="onSelect(contact)"
+          class="contact-row"
+          [class.is-selected]="selectedContact && selectedContact.id === contact.id"
+        >
+          <!-- Avatar + Info -->
+          <div class="contact-summary">
+            <app-user-avatar
+              [style]="AvatarStyles.LIST"
+              [imageUrl]="contact.avatar"
+              [name]="contact.firstName + ' ' + contact.lastName"
+              [status]="null">
+            </app-user-avatar>
+
+            <div class="contact-copy">
+              <h4>
+                @for (seg of highlight(fullName(contact), true); track $index) {
+                  <span [class.search-hl]="seg.match">{{ seg.text }}</span>
+                }
+              </h4>
+              <div>
+                <span>
+                  @for (seg of highlight(subtitle(contact), subtitleMatched(contact)); track $index) {
+                    <span [class.search-hl]="seg.match">{{ seg.text }}</span>
+                  }
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Icons -->
+          <div class="row-actions">
+            <!-- Message icon -->
+            <button
+              [class]="selectedContact && selectedContact.id === contact.id
+                ? 'contact-action is-active' : 'contact-action'"
+            >
+              <img class="svg-icon" src="assets/svg/message.svg" alt="Message" />
+            </button>
+
+            <!-- Phone icon -->
+            <button
+              [class]="selectedContact && selectedContact.id === contact.id
+                ? 'contact-action is-active' : 'contact-action'"
+            >
+              <img class="svg-icon" src="assets/svg/phone.svg" alt="Call" />
+            </button>
+
+            <!-- More dots icon -->
+            <button
+              [class]="selectedContact && selectedContact.id === contact.id
+                ? 'contact-action is-active' : 'contact-action'"
+            >
+              <img class="svg-icon" src="assets/svg/more.svg" alt="More options" />
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <div class="list-empty">No contacts found.</div>
+      }
+    }
+  </div>
+</section>

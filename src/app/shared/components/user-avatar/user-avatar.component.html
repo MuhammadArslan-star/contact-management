@@ -1,0 +1,24 @@
+<div [class]="containerClasses()">
+  <!-- Image Avatar -->
+  @if (imageUrl) {
+    <img
+      [src]="imageUrl"
+      [alt]="name"
+      (error)="handleImageError()"
+      [class]="imageClasses()"
+    />
+  } @else {
+    <!-- Initials fallback (the API provides no photos). -->
+    <div [class]="fallbackClasses()">
+      <span [class]="fallbackTextClasses()">{{ initials() }}</span>
+    </div>
+  }
+
+  <!-- Status Indicator Dot -->
+  @if (status) {
+    <span
+      [class]="statusClasses()"
+      [title]="status"
+    ></span>
+  }
+</div>

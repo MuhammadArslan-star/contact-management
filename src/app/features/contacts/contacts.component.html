@@ -1,0 +1,25 @@
+<div class="app-shell">
+  <div class="contacts-app">
+
+    <app-contact-listing
+      [contacts]="filteredContacts()"
+      [selectedContact]="selectedContact()"
+      [searchQ]="searchQ()"
+      [loading]="contactsLoading()"
+      [showMobileDetails]="showMobileDetails()"
+      [apiError]="contactsLoadError()"
+      (contactSelected)="selectContact($event)"
+      (searchChange)="searchQ.set($event)"
+    ></app-contact-listing>
+
+    <app-contact-details
+      [contact]="selectedContact()"
+      [emails]="emails()"
+      [loading]="detailsLoading()"
+      [detailsError]="detailsError()"
+      [showMobileDetails]="showMobileDetails()"
+      (backToList)="goBackToList()"
+    ></app-contact-details>
+
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<section
+  [class.flex]="showMobileDetails"
+  [class.hidden]="!showMobileDetails"
+  class="contact-details"
+>
+  @if (loading || contact) {
+    <!-- Mobile back button -->
+    <div class="md:hidden flex items-center justify-between p-4 border-b border-[#eee] sticky top-0 bg-white z-30">
+      <button
+        (click)="onBack()"
+        class="flex items-center text-sm font-semibold text-[#6b5dd3] cursor-pointer"
+      >
+        <img class="svg-icon w-4 h-4 mr-1" src="assets/svg/arrow-left.svg" alt="Back" />
+        Back to List
+      </button>
+    </div>
+  }
+
+  @if (loading) {
+    <!-- Skeleton mirrors the loaded details layout -->
+    <div class="profile-header">
+      <div class="profile-card">
+        <span class="skeleton skeleton-detail-avatar"></span>
+        <div class="profile-copy">
+          <span class="skeleton skeleton-line skeleton-detail-name"></span>
+          <span class="skeleton skeleton-line skeleton-detail-role"></span>
+          <div class="profile-actions">
+            <span class="skeleton skeleton-detail-button"></span>
+            <span class="skeleton skeleton-detail-action"></span>
+            <span class="skeleton skeleton-detail-action"></span>
+            <span class="skeleton skeleton-detail-action"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-information">
+      <!-- Bio skeleton (two lines) -->
+      <div class="information-row bio-row">
+        <span class="skeleton skeleton-line skeleton-info-label"></span>
+        <div class="information-value">
+          <span class="skeleton skeleton-line skeleton-bio-line"></span>
+          <span class="skeleton skeleton-line skeleton-bio-line short"></span>
+        </div>
+      </div>
+      @for (row of skeletonRows; track $index) {
+        <div class="information-row single-row">
+          <span class="skeleton skeleton-line skeleton-info-label"></span>
+          <span class="skeleton skeleton-line skeleton-info-value"></span>
+        </div>
+      }
+    </div>
+  } @else if (contact) {
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-card">
+        <app-user-avatar
+          [style]="AvatarStyles.DETAIL"
+          [imageUrl]="contact.avatar"
+          [name]="contact.firstName + ' ' + contact.lastName"
+          [status]="null">
+        </app-user-avatar>
+
+        <div class="profile-copy">
+          <h2>
+            {{ contact.firstName }} {{ contact.lastName }}
+          </h2>
+          <p>
+            {{ contact.role }}
+          </p>
+
+          <!-- Action buttons row -->
+          <div class="profile-actions">
+            <app-primary-button label="Message"></app-primary-button>
+
+            <button class="detail-action">
+              <img class="svg-icon" src="assets/svg/phone.svg" alt="Call" />
+            </button>
+
+            <button class="detail-action">
+              <img class="svg-icon" src="assets/svg/upload.svg" alt="Share" />
+            </button>
+
+            <button class="detail-action">
+              <img class="svg-icon" src="assets/svg/more.svg" alt="More options" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Info Rows (screenshot order: Bio, Email, Phone, Social) -->
+    <div class="contact-information">
+      <!-- Bio -->
+      <div class="information-row bio-row">
+        <span class="information-label">Bio</span>
+        <p class="information-value">
+          {{ contact.bio || 'No description provided.' }}
+        </p>
+      </div>
+
+      <!-- Email addresses -->
+      <div class="information-row email-row">
+        <span class="information-label">Email</span>
+        <div class="information-value">
+          @if (detailsError) {
+            <span class="details-error">{{ detailsError }}</span>
+          } @else {
+            @for (mail of emails; track mail.id) {
+              <div class="email-line">
+                <span class="email-address">{{ mail.email }}</span>
+                @if (mail.isPrimary) {
+                  <span class="primary-tag">Primary</span>
+                }
+              </div>
+            } @empty {
+              <span class="no-emails">No email addresses.</span>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Dial -->
+      <div class="information-row single-row">
+        <span class="information-label">Dial</span>
+        <span class="information-value">{{ contact.dial || '—' }}</span>
+      </div>
+
+      <!-- Meeting -->
+      <div class="information-row single-row">
+        <span class="information-label">Meeting</span>
+        @if (contact.meeting) {
+          <a [href]="contact.meeting" target="_blank" rel="noopener noreferrer" class="information-value meeting-link">{{ contact.meeting }}</a>
+        } @else {
+          <span class="information-value">—</span>
+        }
+      </div>
+
+      <!-- Phone -->
+      <div class="information-row phone-row">
+        <span class="information-label">Phone</span>
+        <div class="information-value">
+          <div class="primary-line">
+            <span>{{ contact.phone || '—' }}</span>
+            @if (contact.phone) {
+              <span class="primary-tag">Primary</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="information-row social-row">
+        <span class="information-label">Social</span>
+        <div class="social-links">
+          @for (social of socials; track social.platform) {
+            <app-social-icons [platform]="social.platform" [url]="social.url"></app-social-icons>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- Empty state — no contact selected -->
+    <div class="details-empty">
+      <p class="details-empty-title">No contact selected</p>
+      <p class="details-empty-subtitle">Select a contact from the list to view their details.</p>
+    </div>
+  }
+</section>
