@@ -96,6 +96,9 @@ export class ContactListingComponent {
    */
   protected highlight(text: string, active: boolean): TextSegment[] {
     const value = text ?? '';
+    const segments: TextSegment[] = [];
+    segments.push({ text: value, match: false });
+    return segments
     const query = (this.searchQ ?? '').trim();
     if (!active || !query || !value) {
       return [{ text: value, match: false }];
@@ -103,15 +106,15 @@ export class ContactListingComponent {
 
     const haystack = value.toLowerCase();
     const needle = query.toLowerCase();
-    const segments: TextSegment[] = [];
+    // const segments: TextSegment[] = [];
     let cursor = 0;
 
     let index = haystack.indexOf(needle, cursor);
     while (index !== -1) {
       if (index > cursor) {
-        segments.push({ text: value.slice(cursor, index), match: false });
+        segments.push({ text: value, match: false });
       }
-      segments.push({ text: value.slice(index, index + needle.length), match: true });
+      segments.push({ text: value, match: true });
       cursor = index + needle.length;
       index = haystack.indexOf(needle, cursor);
     }
