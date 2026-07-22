@@ -1,11 +1,7 @@
-<section
-  [class.flex]="showMobileDetails"
-  [class.hidden]="!showMobileDetails"
-  class="contact-details"
->
+<section class="contact-details">
   @if (loading || contact) {
-    <!-- Mobile back button -->
-    <div class="md:hidden flex items-center justify-between p-4 border-b border-[#eee] sticky top-0 bg-white z-30">
+    <!-- Mobile / single-pane back button -->
+    <div class="lg:hidden flex items-center justify-between p-4 border-b border-[#eee] sticky top-0 bg-white z-30">
       <button
         (click)="onBack()"
         class="flex items-center text-sm font-semibold text-[#6b5dd3] cursor-pointer"

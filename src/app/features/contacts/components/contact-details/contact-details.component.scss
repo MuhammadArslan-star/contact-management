@@ -1,32 +1,27 @@
 :host { display: block; height: 100%; flex: 1; min-width: 0; }
 
-.contact-details { display: flex; flex-direction: column; height: 100%; overflow-y: auto; background: #fff; }
-.profile-header { padding-top: 77px; }
-.profile-card { display: flex; align-items: flex-start; gap: 27px; margin-left: 149px; }
+.contact-details { display: flex; flex-direction: column; height: 100%; overflow-y: auto; overflow-x: hidden; background: #fff; }
+.profile-header { padding: clamp(28px, 6vw, 77px) clamp(20px, 5vw, 74px) 0; }
+.profile-card { display: flex; align-items: flex-start; gap: 27px; margin-left: 0; }
 .profile-copy { padding-top: 0; }
 .profile-copy h2 { margin: 0; color: #202126; font-size: 23px; line-height: 29px; font-weight: 700; letter-spacing: -.6px; }
 .profile-copy p { margin: 1px 0 0; color: #7c83a6; font-size: 16px; line-height: 23px; font-weight: 400; }
-.profile-actions { display: flex; align-items: center; gap: 7px; margin-top: 23px; }
+.profile-actions { display: flex; align-items: center; gap: 7px; margin-top: 23px; flex-wrap: wrap; }
 .detail-action { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; color: #7981a3; background: #fff; border: 1px solid #e7e8f0; border-radius: 11px; cursor: pointer; }
 .detail-action .svg-icon { width: 18px; height: 18px; }
-.contact-information { width: min(689px, calc(100% - 110px)); margin: 45px 0 0 74px; padding-bottom: 60px; }
+.contact-information { width: auto; max-width: 700px; margin: 42px clamp(20px, 5vw, 74px) 0; padding-bottom: 56px; display: flex; flex-direction: column; gap: 26px; }
 .information-row { display: flex; color: #202126; font-size: 16px; line-height: 24px; }
 .information-label { flex: 0 0 90px; box-sizing: border-box; padding-right: 18px; color: #7c84a7; text-align: right; white-space: nowrap; }
-.information-value { flex: 1; min-width: 0; }
-.bio-row { min-height: 101px; }
+.information-value { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .bio-row p { max-width: 625px; margin: 0; line-height: 23px; }
-.single-row { min-height: 52px; }
-.email-row { min-height: 89px; padding-top: 4px; }
-.phone-row { min-height: 96px; }
-.social-row { min-height: 54px; }
-.primary-line { display: flex; justify-content: space-between; align-items: center; }
-.primary-tag { padding: 4px 15px; color: #7c83a7; background: #f5f5fb; border-radius: 6px; font-size: 14px; line-height: 20px; font-weight: 600; }
-.social-links { display: flex; gap: 7px; align-items: flex-start; }
+.primary-line { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
+.primary-tag { padding: 4px 15px; color: #7c83a7; background: #f5f5fb; border-radius: 6px; font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; }
+.social-links { display: flex; gap: 7px; align-items: flex-start; flex-wrap: wrap; }
 .meeting-link { color: #202126; text-decoration: none; }
 .meeting-link:hover { text-decoration: underline; }
 
 /* Email address list */
-.email-line { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.email-line { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px 16px; }
 .email-line + .email-line { margin-top: 12px; }
 .email-address { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .no-emails { color: #aaa; font-size: 14px; }
@@ -49,8 +44,7 @@
 .skeleton-bio-line { width: 560px; max-width: 100%; height: 12px; }
 .skeleton-bio-line.short { width: 360px; margin-top: 12px; }
 
-@media (max-width: 767px) {
-  .profile-header { padding: 32px 24px 0; }
-  .profile-card { margin-left: 0; }
-  .contact-information { width: auto; margin: 36px 24px 0; }
+@media (max-width: 520px) {
+  .profile-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .information-label { flex: 0 0 74px; padding-right: 12px; }
 }
