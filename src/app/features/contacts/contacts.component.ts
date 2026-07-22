@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
 import { ContactListingComponent } from './components/contact-listing/contact-listing.component';
@@ -47,23 +47,6 @@ export class ContactsComponent {
         this.contactsLoading.set(false);
       });
   }
-
-  // Filtered contacts based on search query.
-  // Matches first name, last name, phone, and email (stored in `dial`).
-  // Case-insensitive and safe against empty/missing field values.
-  protected filteredContacts = computed(() => {
-    const query = this.searchQ().trim().toLowerCase();
-    if (!query) {
-      return this.contacts();
-    }
-    return this.contacts().filter((c) => {
-      const haystack = [c.firstName, c.lastName, c.phone, c.dial]
-        .filter((value): value is string => !!value)
-        .join(' ')
-        .toLowerCase();
-      return haystack.includes(query);
-    });
-  });
 
   protected selectContact(contact: Contact) {
     this.selectedContact.set(contact);

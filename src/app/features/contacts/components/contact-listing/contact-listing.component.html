@@ -61,7 +61,8 @@
         </div>
       }
     } @else {
-      @for (contact of contacts; track contact.id) {
+      @for (contact of contacts | contactSearch: searchQ; track contact.id) {
+        @let subtitle = contact | contactSubtitle: searchQ;
         <div
           (click)="onSelect(contact)"
           class="contact-row"
@@ -77,17 +78,15 @@
             </app-user-avatar>
 
             <div class="contact-copy">
-              <h4>
-                @for (seg of highlight(fullName(contact), true); track $index) {
-                  <span [class.search-hl]="seg.match">{{ seg.text }}</span>
-                }
-              </h4>
+              <h4
+                class="single-line-text"
+                [innerHTML]="fullName(contact) | searchHighlight: searchQ"
+              ></h4>
               <div>
-                <span>
-                  @for (seg of highlight(subtitle(contact), subtitleMatched(contact)); track $index) {
-                    <span [class.search-hl]="seg.match">{{ seg.text }}</span>
-                  }
-                </span>
+                <span
+                  class="single-line-text"
+                  [innerHTML]="subtitle.text | searchHighlight: searchQ: subtitle.isMatch"
+                ></span>
               </div>
             </div>
           </div>

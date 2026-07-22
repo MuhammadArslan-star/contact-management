@@ -2,7 +2,7 @@
   <div class="contacts-app" [class.show-details]="showMobileDetails()">
 
     <app-contact-listing
-      [contacts]="filteredContacts()"
+      [contacts]="contacts()"
       [selectedContact]="selectedContact()"
       [searchQ]="searchQ()"
       [loading]="contactsLoading()"

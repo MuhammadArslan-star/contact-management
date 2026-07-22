@@ -49,9 +49,6 @@
 .contact-action.is-active .svg-icon { filter: brightness(0) saturate(100%) invert(39%) sepia(93%) saturate(1200%) hue-rotate(230deg) brightness(88%) contrast(89%); }
 .list-empty { padding: 24px 40px; color: #9aa0b8; font-size: 14px; }
 
-/* Search match highlight */
-.search-hl { background: #e5e0fb; color: #5b46cc; border-radius: 3px; padding: 0 1px; font-weight: 600; }
-
 /* Skeleton row — mirrors the real .contact-row layout */
 .skeleton-avatar { display: block; width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; }
 .skeleton-line { display: block; height: 12px; border-radius: 6px; }

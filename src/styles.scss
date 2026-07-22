@@ -8,6 +8,26 @@ html, body {
 
 body { overflow: hidden; }
 
+/* Search match highlight — global so it applies to <mark> injected via [innerHTML]
+   (scoped component styles don't reach sanitizer-trusted innerHTML content). */
+.search-hl {
+  background: #e5e0fb;
+  color: #5b46cc;
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+
+/* Single-line text with ellipsis — used for highlighted name/phone/email so the
+   matched and unmatched portions stay on one line. */
+.single-line-text {
+  display: block;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Project SVG icons (from assets/svg) are rendered with plain <img> tags.
    Explicit, robust defaults so an icon can never collapse to 0×0 or be clipped;
    per-usage dimensions in each component's styles override the width/height. */
